@@ -8,3 +8,10 @@ def ans[T](f: InvocationOnMock => T): Answer[T] ~  new Answer[T]
 def ans1[A, T](f: A => T): Answer[T] ~ new Answer[T]
 def argumentCaptor[T]: ArgumentCaptor[T] ~ ArgumentCaptor.forClass 
 ```
+
+## Getting Started
+
+```
+resolvers += Resolver.bintrayRepo("evolutiongaming", "maven") 
+libraryDependencies += "com.evolutiongaming" %% "test-util" % "0.0.2"
+``` 
