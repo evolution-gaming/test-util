@@ -9,6 +9,7 @@ import scala.reflect.ClassTag
 import scala.util.Try
 
 object MockitoHelper {
+
   def arg[T](f: T => Any)(implicit tag: ClassTag[T]): T = {
     val matcher = new ArgumentMatcher[T] {
       def matches(argument: T): Boolean = tag.unapply(argument).exists(x => Try(f(x)).isSuccess)
@@ -22,13 +23,13 @@ object MockitoHelper {
     def answer(invocation: InvocationOnMock): T = f(invocation)
   }
 
-  def ans1[A, T](f: A => T)(implicit tag: ClassTag[A]): Answer[T] = new Answer[T] {
+  def ans1[A, T](f: A => T): Answer[T] = new Answer[T] {
     def answer(invocation: InvocationOnMock): T = f {
       invocation.getArguments.apply(0).asInstanceOf[A]
     }
   }
 
-  def ans2[A1, A2, T](f: (A1, A2) => T)(implicit tag1: ClassTag[A1], tag2: ClassTag[A2]): Answer[T] = new Answer[T] {
+  def ans2[A1, A2, T](f: (A1, A2) => T): Answer[T] = new Answer[T] {
     def answer(invocation: InvocationOnMock): T = {
       val arguments = invocation.getArguments
       val a1 = arguments(0).asInstanceOf[A1]

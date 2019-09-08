@@ -1,43 +1,25 @@
-import sbt.Keys.{homepage, organizationName, startYear}
+name := "test-util"
 
-lazy val thisBuildSettings = inThisBuild(List(
-  scalaVersion := "2.12.3"
-))
+organization := "com.evolutiongaming"
 
-lazy val commonSettings = Seq(
-  scalacOptions in(Compile, doc) ++= Seq("-no-link-warnings"),
-  scalacOptions ++= Seq(
-    "-encoding", "UTF-8",
-    "-feature",
-    "-unchecked",
-    "-deprecation",
-    "-Xfatal-warnings",
-    "-Xlint",
-    "-Yno-adapted-args",
-    "-Ywarn-dead-code",
-    "-Ywarn-numeric-widen",
-    "-Xfuture",
-    "-Xlint:-unused,_"
-  ),
-  crossScalaVersions := Seq("2.12.3", "2.11.11"),
-  resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
-)
+homepage := Some(new URL("http://github.com/evolution-gaming/scache"))
 
-lazy val publishSettings = Seq(
-  homepage := Some(new URL("http://github.com/evolution-gaming/akka-tools")),
-  startYear := Some(2017),
-  organizationName := "Evolution Gaming",
-  organizationHomepage := Some(url("http://evolutiongaming.com")),
-  bintrayOrganization := Some("evolutiongaming"),
-  releaseCrossBuild := true,
-  organization := "com.evolutiongaming",
-  licenses := Seq("MIT" -> url("http://www.opensource.org/licenses/mit-license.html"))
-)
+startYear := Some(2017)
 
-lazy val allSettings = thisBuildSettings ++ commonSettings ++ publishSettings
+organizationName := "Evolution Gaming"
 
-lazy val akkaTools = (project
-  in file(".")
-  settings (name := "test-util")
-  settings allSettings
-  settings(libraryDependencies ++= Seq("org.mockito" % "mockito-core" % "2.11.0")))
+organizationHomepage := Some(url("http://evolutiongaming.com"))
+
+bintrayOrganization := Some("evolutiongaming")
+
+scalaVersion := crossScalaVersions.value.head
+
+crossScalaVersions := Seq("2.13.0", "2.12.9")
+
+resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
+
+libraryDependencies ++= Seq("org.mockito" % "mockito-core" % "3.0.0")
+
+licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
+
+releaseCrossBuild := true
